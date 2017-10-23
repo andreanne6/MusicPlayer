@@ -9,7 +9,7 @@ app.on('ready', function () {
   win = new BrowserWindow({width: 1000, height: 600});
 
   // Specify entry point
-  win.loadURL('http://localhost:4000');
+  win.loadURL('http://localhost:4200');
 
   // Show dev tools
   // Remove this line before distributing
