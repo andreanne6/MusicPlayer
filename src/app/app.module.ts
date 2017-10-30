@@ -11,17 +11,18 @@ import { SearchComponent } from './search/search.component';
 import { routing } from './app.routes';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchComponent,
-    PlaylistComponent
-  ],
-  imports: [
+   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     routing
   ],
+  declarations: [
+    AppComponent,
+    SearchComponent,
+    PlaylistComponent
+  ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
