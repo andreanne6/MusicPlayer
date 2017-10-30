@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css']
+  templateUrl: './player.html',
+  styleUrls: ['./player.css']
 })
 
 export class PlayerComponent implements OnInit{

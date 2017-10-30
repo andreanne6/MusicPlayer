@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { MusicService } from './music.service';
 import { ApiService } from './api.service';
 
