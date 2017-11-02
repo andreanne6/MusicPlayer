@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import '../sass/style.scss';
 
 @Component({
   selector: 'app-root',
