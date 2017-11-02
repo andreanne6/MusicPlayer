@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'navigation',
-  templateUrl: './navigation.html',
-  styleUrls: ['./navigation.css'],
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss'],
 })
 
 export class NavigationComponent implements OnInit{
