@@ -17,7 +17,7 @@ export abstract class IApiService {
         return this.http
             .get(queryUrl, {headers: headers})
             .map(res => res.json())
-            .map(data => data.tracks);
+            .map(data => data.tracks.items);
     }
 
     protected abstract doGetTracksQueryUrl(search: string): string;

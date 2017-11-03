@@ -16,7 +16,7 @@ export class MusicService {
         private spotify: SpotifyApiService
     ) {
         this.audio = new Audio();
-        this.musicApis = [spotify];
+        this.musicApis = [spotify, spotify];
     }
 
     /*
@@ -27,13 +27,24 @@ export class MusicService {
         .subscribe(res => {
             // Each item has a "preview_url" property for a 30s playback. Null means no preview is available.
             // That's the best spotify can do for us.
-            this.tracksInfo = res.items;
+            this.tracksInfo = res;
         });
     """
     */
-    searchMusic(search: string): Observable {
-        //TODO account for any amount of APIs.
-        return this.spotify.getTracks(search);
+    searchMusic(search: string): Observable<any> {
+        let observables = [];
+        for(let i = 0; i < this.musicApis.length; i++) {
+            observables.push(this.musicApis[i].getTracks(search));
+        }
+
+        return Observable.forkJoin(observables)
+            .map(arrayOfTracks => {
+                let allTracks = [];
+                for(let i = 0; i < arrayOfTracks.length; i++) {
+                    allTracks = allTracks.concat(arrayOfTracks[i]);
+                }
+                return allTracks;
+            });
     }
 
     load(url) {
