@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
 import '../sass/style.scss';
 
+import { Component } from '@angular/core';
+import { MusicService } from "./shared/music.service"
+
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
- title = 'app works!';
+    constructor(
+        private musicService: MusicService
+    ){}
 
+    title = 'app works!';
 }
-
