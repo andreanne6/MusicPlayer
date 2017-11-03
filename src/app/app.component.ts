@@ -11,7 +11,7 @@ import { MusicService } from "./shared/music.service"
 export class AppComponent {
     constructor(
         private musicService: MusicService
-    ){}
+    ) {}
 
     title = 'app works!';
 }
