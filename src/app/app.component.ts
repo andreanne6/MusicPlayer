@@ -11,11 +11,11 @@ import { MusicService } from "./shared/music.service"
 export class AppComponent {
     constructor(
         private musicService: MusicService
-    ) {
+    ) {}
+
+    public music() {
         this.musicService.searchMusic("i'm blue")
             .subscribe(res => {
-                // Each item has a "preview_url" property for a 30s playback. Null means no preview is available.
-                // That's the best spotify can do for us.
                 console.log(res);
                 this.musicService.play(res[0]);
             });

@@ -4,10 +4,9 @@ import { IApiService, Song } from './iapi.service';
 
 @Injectable()
 export class SpotifyApiService extends IApiService {
-    apiUrl = "https://api.spotify.com/v1/";
-    authUrl = "https://accounts.spotify.com/api/token";
+    apiUrl = "https://api.spotify.com/v1";
+    backendUrl = "http://localhost:3000";
     clientId = "b600e89282ae451fbc4c687673b3517e";
-    clientSecret = "aa073ec39709468990e99679e6401bd1"; //I know..
     token;
 
     constructor(http: Http) {
@@ -17,7 +16,7 @@ export class SpotifyApiService extends IApiService {
 
     protected doGetTracksQueryUrl(search: string): string {
         search = search.replace(" ", "+");
-        return `${this.apiUrl}search?client_id=${this.clientId}&q=${search}&type=track`;
+        return `${this.apiUrl}/search?client_id=${this.clientId}&q=${search}&type=track`;
     }
 
     protected doGetHeaders(): Headers {
@@ -41,12 +40,9 @@ export class SpotifyApiService extends IApiService {
     }
 
     private setToken() {
-        let headers = new Headers();
-        headers.append('Authorization', `Basic ${this.clientId}:${this.clientSecret}`);
         this.http
-            .post(this.authUrl, JSON.stringify({grant_type: "client_credentials"}), {headers: headers})
-            .map(results => results.json())
-            .subscribe(response => this.token = response.access_token);
+            .get(`${this.backendUrl}/tokens/spotify`)
+            .subscribe(result => this.token = result.text());
     }
 
     private itemToSong(item: any): Song {
