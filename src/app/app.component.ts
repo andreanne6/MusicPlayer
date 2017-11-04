@@ -12,11 +12,12 @@ export class AppComponent {
     constructor(
         private musicService: MusicService
     ) {
-        this.musicService.searchMusic("blue")
+        this.musicService.searchMusic("i'm blue")
             .subscribe(res => {
                 // Each item has a "preview_url" property for a 30s playback. Null means no preview is available.
                 // That's the best spotify can do for us.
                 console.log(res);
+                this.musicService.play(res[0]);
             });
     }
 
