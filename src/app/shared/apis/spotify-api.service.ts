@@ -5,7 +5,6 @@ import { IApiService, Song } from './iapi.service';
 @Injectable()
 export class SpotifyApiService extends IApiService {
     apiUrl = "https://api.spotify.com/v1";
-    backendUrl = "http://localhost:3000";
     clientId = "b600e89282ae451fbc4c687673b3517e";
     token;
 
@@ -47,6 +46,7 @@ export class SpotifyApiService extends IApiService {
 
     private itemToSong(item: any): Song {
         let song = new Song();
+
         song.title = item.name;
         song.album = item.album.name;
         song.authors = this.only("name", item.artists);
