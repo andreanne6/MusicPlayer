@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx'
 
 export class Song {
     title;
+    album;
     authors;
     duration;
     streamUrl;
@@ -13,20 +14,22 @@ export class Song {
 
 @Injectable()
 export abstract class IApiService {
+    protected backendUrl = "http://localhost:3000";
+
     constructor(protected http: Http) {}
 
     //Template method
     public findSongs(search: string): Observable<Song[]> {
         const queryUrl = this.doGetTracksQueryUrl(search);
-        const headers = this.doGetHeaders();
+        const queryHeaders = this.doGetQueryHeaders();
 
         return this.http
-            .get(queryUrl, {headers: headers})
+            .get(queryUrl, {headers: queryHeaders})
             .map(results => results.json())
             .map(data => this.doConvertToSongs(data));
     }
 
     protected abstract doGetTracksQueryUrl(search: string): string;
-    protected abstract doGetHeaders(): Headers;
+    protected abstract doGetQueryHeaders(): Headers;
     protected abstract doConvertToSongs(apiData): Song[];
 }
