@@ -19,10 +19,10 @@ export class SpotifyApiService extends IApiService {
         return `${this.apiUrl}/search?client_id=${this.clientId}&q=${search}&type=track`;
     }
 
-    protected doGetHeaders(): Headers {
-        let headers = new Headers();
-        headers.append('Authorization', `Bearer ${this.token}`);
-        return headers;
+    protected doGetQueryHeaders(): Headers {
+        let queryHeaders = new Headers();
+        queryHeaders.append('Authorization', `Bearer ${this.token}`);
+        return queryHeaders;
     }
 
     protected doConvertToSongs(apiData: any): Song[] {
@@ -48,6 +48,7 @@ export class SpotifyApiService extends IApiService {
     private itemToSong(item: any): Song {
         let song = new Song();
         song.title = item.name;
+        song.album = item.album.name;
         song.authors = this.only("name", item.artists);
         song.duration = 30;
         song.streamUrl = item.preview_url;

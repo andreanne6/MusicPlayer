@@ -1,11 +1,16 @@
+//angular
 import { Injectable } from '@angular/core';
-import { Song } from './apis/iapi.service';
-import { SpotifyApiService } from './apis/spotify-api.service';
-import { Observable } from 'rxjs/Rx'
 
+//rxjs
+import { Observable } from 'rxjs/Rx'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+
+//Apis
+import { Song } from './apis/iapi.service';
+import { SpotifyApiService } from './apis/spotify-api.service';
+import { JamendoApiService } from './apis/jamendo-api.service';
 
 @Injectable()
 export class MusicService {
@@ -13,10 +18,11 @@ export class MusicService {
     musicApis;
 
     constructor(
-        private spotify: SpotifyApiService
+        private spotify: SpotifyApiService,
+        private jamendo: JamendoApiService
     ) {
         this.audio = new Audio();
-        this.musicApis = [spotify];
+        this.musicApis = [spotify, jamendo];
     }
 
     /*
