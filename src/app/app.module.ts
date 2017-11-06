@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { SidebarModule } from 'ng-sidebar';
+import { SharedModule } from "./shared/shared.module"
 
 // Declarations
 import { AppComponent } from './app.component';
@@ -18,9 +19,10 @@ import { routing } from './app.routes';
     FormsModule,
     HttpModule,
     SidebarModule.forRoot(),
-    routing,
     SearchModule,
-    PlaylistModule
+    PlaylistModule,
+    SharedModule,
+    routing
   ],
   declarations: [
     AppComponent,
