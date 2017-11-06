@@ -1,1 +1,22 @@
+input{
+  width: 90%;
+  margin: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.21);
+  border-radius: 4px;
+}
 
+button{
+  width: 90%;
+  text-align: center;
+  margin: 10px;
+}
+
+button:focus{
+  outline:0 !important;
+}
+
+tr:hover{
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.22);
+  border-radius: 4px;
+}

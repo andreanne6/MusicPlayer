@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MusicService } from "../shared/music.service"
 
 @Component({
   selector: 'search',
@@ -6,8 +7,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.component.scss']
 })
 
-export class SearchComponent implements OnInit{
-	constructor(){}
+export class SearchComponent implements OnInit {
+  constructor(
+    private musicService: MusicService
+  ) { }
+  ngOnInit() { }
 
-  ngOnInit() {}
+  title = 'Search Component';
+
+  songs = [];
+
+  observables = null;
+
+  public search(Sparam: string) {
+    this.songs = [];
+    if (Sparam != "") {
+      this.observables = this.musicService.searchMusic(Sparam);
+      this.observables.subscribe(res => {
+        res.forEach((item, index) => {
+          this.songs.push({ 'record': index, 'name': item.title, 'artist': item.authors });
+        })
+        console.log(res);
+        //this.musicService.play(res[0]);
+      });
+    }
+  }
+
+  public play(i) {
+    this.observables.subscribe(res => {
+      this.musicService.play(res[i]);
+    })
+  }
 }

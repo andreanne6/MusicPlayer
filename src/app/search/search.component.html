@@ -1,4 +1,22 @@
-<h1>Search Component</h1>
+<h1>
+    {{title}}
+</h1>
+<input #sParam type="text"><br>
+<button (click)="search(sParam.value)" class="btn btn-secondary">Search</button><br>
+<br>
+<template [ngIf]="songs.length">
+  <table class="table">
+    <tr>
+      <th>Song Title</th>
+      <th>Artist</th>
+    </tr>
+    <tr *ngFor="let song of songs; let i = index" [id] = song.record (click)="play(i)">
+      <td>{{song.name}}</td>
+      <td>{{song.artist}}</td>
+    </tr>
+  </table>
+<template>
+
 <!-- <p-autoComplete
   [ngModel]="song"
   [suggestions]="songs"
@@ -13,5 +31,3 @@
     </div>
   </template>
 </p-autoComplete> -->
-
-

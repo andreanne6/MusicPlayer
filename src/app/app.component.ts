@@ -20,6 +20,4 @@ export class AppComponent {
                 this.musicService.play(res[0]);
             });
     }
-
-    title = 'app works!';
 }
