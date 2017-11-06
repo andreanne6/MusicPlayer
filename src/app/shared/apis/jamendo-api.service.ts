@@ -6,7 +6,6 @@ import { IApiService, Song } from './iapi.service';
 export class JamendoApiService extends IApiService {
     apiUrl = "https://api.jamendo.com/v3.0";
     clientId = "c38b5501";
-    clientSecret = "8cb7af8209e30429c3a0ef01ba0b26c9";
 
     constructor(http: Http) {
         super(http);
@@ -34,6 +33,7 @@ export class JamendoApiService extends IApiService {
 
     private itemToSong(item: any): Song {
         let song = new Song();
+
         song.title = item.name;
         song.album = item.album_name;
         song.authors = [item.artist_name];

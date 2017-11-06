@@ -11,6 +11,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { Song } from './apis/iapi.service';
 import { SpotifyApiService } from './apis/spotify-api.service';
 import { JamendoApiService } from './apis/jamendo-api.service';
+import { DeezerApiService } from './apis/deezer-api.service';
 
 @Injectable()
 export class MusicService {
@@ -19,10 +20,11 @@ export class MusicService {
 
     constructor(
         private spotify: SpotifyApiService,
-        private jamendo: JamendoApiService
+        private jamendo: JamendoApiService,
+        private deezer: DeezerApiService
     ) {
         this.audio = new Audio();
-        this.musicApis = [spotify, jamendo];
+        this.musicApis = [spotify, jamendo, deezer];
     }
 
     /*
