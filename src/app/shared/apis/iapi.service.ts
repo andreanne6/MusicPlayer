@@ -10,6 +10,16 @@ export class Song {
     authors;
     duration;
     streamUrl;
+    playlistId;
+
+    constructor() {
+        this.title = null;
+        this.album = null;
+        this.authors = [];
+        this.duration = null;
+        this.streamUrl = null;
+        this.playlistId = null;
+    }
 }
 
 @Injectable()
