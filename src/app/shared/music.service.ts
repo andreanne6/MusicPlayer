@@ -13,7 +13,8 @@ import { SpotifyApiService } from './apis/spotify-api.service';
 import { JamendoApiService } from './apis/jamendo-api.service';
 import { DeezerApiService } from './apis/deezer-api.service';
 
-// Do not use functions in here.
+// DO NOT USE functions in here.
+// Use the object as read only.
 // Always use the MusicService when you want to modify playlists.
 export class Playlist {
     id;
@@ -73,6 +74,7 @@ export class MusicService {
         return playlist;
     }
 
+    // Returns null if the playlist doesn't exist
     private updatePlaylist(playlist: Playlist): Playlist {
         for(let i = 0; i < this.playlists.length; i++) {
             if(this.playlists[i].id == playlist.id) {
@@ -83,6 +85,7 @@ export class MusicService {
         return null;
     }
 
+    // Returns null if the playlist doesn't exist
     public deletePlaylist(id: number): Playlist {
         for(let i = 0; i < this.playlists.length; i++) {
             if(this.playlists[i].id == id) {
@@ -95,7 +98,8 @@ export class MusicService {
     }
 
     // playlist param will be modified
-    // returning false means the service doesn't have this playlist.
+    // Returning false means the service doesn't have this playlist.
+    // Make sure you use the service properly.
     public addToPlaylist(playlist: Playlist, song: Song): boolean {
         playlist.addSong(song);
         if(!this.updatePlaylist(playlist)) {
@@ -104,9 +108,9 @@ export class MusicService {
         return true;
     }
 
-
     // playlist param will be modified
-    // returning false means the service doesn't have this playlist.
+    // Returning false means the service doesn't have this playlist.
+    // Make sure you use the service properly.
     public removeFromPlaylist(playlist: Playlist, song: Song): boolean {
         playlist.removeSong(song);
         if(!this.updatePlaylist(playlist)) {
@@ -115,6 +119,22 @@ export class MusicService {
         return true;
     }
 
+    private getPlaylistIndex(id: number) {
+        for(let i = 0; i < this.playlists.length; i++) {
+            if(this.playlists[i].id == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public getPlaylist(id: number) {
+        let index = this.getPlaylistIndex(id)
+        if(index < 0) {
+            return null
+        }
+        return this.playlists[index];
+    }
 
     public getPlaylists() {
         return this.playlists;
