@@ -24,8 +24,6 @@ export class Song {
 
 @Injectable()
 export abstract class IApiService {
-    protected backendUrl = "http://localhost:3000";
-
     constructor(protected http: Http) {}
 
     //Template method

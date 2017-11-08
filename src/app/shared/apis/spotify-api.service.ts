@@ -4,6 +4,7 @@ import { IApiService, Song } from './iapi.service';
 
 @Injectable()
 export class SpotifyApiService extends IApiService {
+    backendUrl = "http://localhost:3000";
     apiUrl = "https://api.spotify.com/v1";
     clientId = "b600e89282ae451fbc4c687673b3517e";
     token;
