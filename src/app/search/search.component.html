@@ -4,7 +4,7 @@
 <input #sParam type="text"><br>
 <button (click)="search(sParam.value)" class="btn btn-secondary">Search</button><br>
 <br>
-<template *ngIf="songs.length">
+<template [ngIf]="songs.length">
   <table class="table">
     <tr>
       <th>Song Title</th>

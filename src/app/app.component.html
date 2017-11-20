@@ -1,14 +1,9 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-3 ">
-      <navigation></navigation>
-    </div>
-    <div class="col-sm-9 ">
-      <router-outlet></router-outlet>
-    </div>
-    <button (click)="music($event)">Music!</button>
+<div class="row">
+  <div class="col-sm-2">
+    <navigation></navigation>
   </div>
-
-  <!--   <h1>
-    {{title}}
-  </h1> -->
+  <div class="col-sm-10">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<!-- <button (click)="music($event)">Music!</button> -->

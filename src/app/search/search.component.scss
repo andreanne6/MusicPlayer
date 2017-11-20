@@ -1,3 +1,5 @@
+@import './../../sass/_variables.scss';
+
 input{
   width: 90%;
   margin: 10px;
@@ -21,15 +23,20 @@ tr:hover{
   border-radius: 4px;
 }
 
+tr{
+  color: $warmyellow-color;
+}
+
 td{
   vertical-align: middle !important;
   // height: 5px;
   // line-height:5px;
+  color: $inverted-color;
 }
 
 .hideoption {
   display:none;
   visibility:hidden;
   height:0;
-  font-size:0; 
+  font-size:0;
 }

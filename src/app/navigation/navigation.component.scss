@@ -23,12 +23,11 @@ ul {
   color: $inverted-color;
 }
 
-ng-sidebar-container{
+nav{
   height: 100vh;
-  width: 20%;
+/*  width:100%;*/
   background-color: $navy-color;
+  border-color:$navy-color;
 }
 
-ng-sidebar{
 
-}
