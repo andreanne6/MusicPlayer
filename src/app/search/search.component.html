@@ -4,7 +4,7 @@
 <input #sParam type="text"><br>
 <button (click)="search(sParam.value)" class="btn btn-secondary">Search</button><br>
 <br>
-<template [ngIf]="songs.length">
+<template *ngIf="songs.length">
   <table class="table">
     <tr>
       <th>Song Title</th>
@@ -17,7 +17,7 @@
       <td>
         <select class="form-control" ng-model="selection" (change)="changed()">
           <option value="Add to playlist" selected class="hideoption">Add to playlist</option>
-          <option *ngFor="let item of playlists" value={{item}}>{{item}}</option>
+          <option *ngFor="let item of playl" value={{item}}>{{item}}</option>
         </select>
       </td>
     </tr>

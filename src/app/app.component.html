@@ -1,4 +1,14 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <div class="container">
-  <search></search>
-</div>
+  <div class="row">
+    <div class="col-sm-3 ">
+      <navigation></navigation>
+    </div>
+    <div class="col-sm-9 ">
+      <router-outlet></router-outlet>
+    </div>
+    <button (click)="music($event)">Music!</button>
+  </div>
+
+  <!--   <h1>
+    {{title}}
+  </h1> -->

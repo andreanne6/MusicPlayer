@@ -1,0 +1,44 @@
+<!-- <div class="container">
+  <div class="col-xs-6">
+    <ul>
+      <li class=" btn " routerLink="search">Search</li>
+    </ul>
+    <!-- <nav class=""> -->
+
+    <!-- </nav> -->
+<!--   </div>
+</div> -->
+
+ <!-- Container for sidebar(s) + page content -->
+    <ng-sidebar-container>
+
+      <!-- A sidebar -->
+      <ng-sidebar #sidebar [position]="left"  [mode]="_MODES[_modeNum]" [showBackdrop]="_showBackdrop">
+        <ul>
+          <li class=" btn " routerLink="search">Search</li>
+           <li class=" btn " routerLink="playlist">Playlists</li>
+        </ul>
+      </ng-sidebar>
+
+
+<!-- <md-sidenav #sideNav mode="push" class="md-sidenav-left" >
+
+
+<li class=" btn " routerLink="search">Search</li>
+<li class=" btn " routerLink="playlist">Playlists</li>
+</md-sidenav> -->
+
+
+<!--  <md-sidenav  mode="push" opened="true" md-component-id="left" class="md-sidenav-left" md-is-locked-open="true">
+      <li class=" btn " routerLink="search">Search</li>
+<li class=" btn " routerLink="playlist">Playlists</li>
+    </md-sidenav> -->
+
+
+
+      <!-- Page content -->
+     <!--  <div ng-sidebar-content>
+        <button (click)="_toggleSidebar()">Toggle sidebar</button>
+      </div> -->
+
+    </ng-sidebar-container>

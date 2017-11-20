@@ -6,9 +6,20 @@ import { Observable } from 'rxjs/Rx'
 
 export class Song {
     title;
+    album;
     authors;
     duration;
     streamUrl;
+    playlistId;
+
+    constructor() {
+        this.title = null;
+        this.album = null;
+        this.authors = [];
+        this.duration = null;
+        this.streamUrl = null;
+        this.playlistId = null;
+    }
 }
 
 @Injectable()
@@ -18,15 +29,15 @@ export abstract class IApiService {
     //Template method
     public findSongs(search: string): Observable<Song[]> {
         const queryUrl = this.doGetTracksQueryUrl(search);
-        const headers = this.doGetHeaders();
+        const queryHeaders = this.doGetQueryHeaders();
 
         return this.http
-            .get(queryUrl, {headers: headers})
+            .get(queryUrl, {headers: queryHeaders})
             .map(results => results.json())
             .map(data => this.doConvertToSongs(data));
     }
 
     protected abstract doGetTracksQueryUrl(search: string): string;
-    protected abstract doGetHeaders(): Headers;
+    protected abstract doGetQueryHeaders(): Headers;
     protected abstract doConvertToSongs(apiData): Song[];
 }

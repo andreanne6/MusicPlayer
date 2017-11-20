@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicService } from "../shared/music.service"
 
+
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -20,7 +21,7 @@ export class SearchComponent implements OnInit {
 
   observables = null;
 
-  playlists = ["1", "2"];
+  playl = ["1", "2"];
 
   public search(Sparam: string) {
     this.songs = [];
