@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() { }
 
-  title = 'Search Component';
+  title = 'Search';
 
   songs = [];
 
