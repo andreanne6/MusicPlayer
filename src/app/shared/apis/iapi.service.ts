@@ -10,12 +10,20 @@ export class Song {
     authors;
     duration;
     streamUrl;
+    playlistId;
+
+    constructor() {
+        this.title = null;
+        this.album = null;
+        this.authors = [];
+        this.duration = null;
+        this.streamUrl = null;
+        this.playlistId = null;
+    }
 }
 
 @Injectable()
 export abstract class IApiService {
-    protected backendUrl = "http://localhost:3000";
-
     constructor(protected http: Http) {}
 
     //Template method
