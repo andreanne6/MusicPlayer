@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, inject, async } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { HttpModule, Headers } from '@angular/http';
 import { SpotifyApiService } from './spotify-api.service';
 import { Song } from './iapi.service';

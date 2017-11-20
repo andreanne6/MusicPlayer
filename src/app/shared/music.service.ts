@@ -36,7 +36,7 @@ export class Playlist {
 
     public removeSong(song: Song): boolean {
         for(let i = 0; i < this.songs.length; i++) {
-            if(this.songs[i].id == song.playlistId) {
+            if(this.songs[i].playlistId === song.playlistId) {
                 this.songs.splice(i, 1);
                 return true;
             }
@@ -75,14 +75,14 @@ export class MusicService {
     }
 
     // Returns null if the playlist doesn't exist
-    private updatePlaylist(playlist: Playlist): Playlist {
+    private updatePlaylist(playlist: Playlist): boolean {
         for(let i = 0; i < this.playlists.length; i++) {
             if(this.playlists[i].id == playlist.id) {
                 this.playlists[i] = playlist;
-                return playlist;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     // Returns null if the playlist doesn't exist
@@ -101,22 +101,15 @@ export class MusicService {
     // Returning false means the service doesn't have this playlist.
     // Make sure you use the service properly.
     public addToPlaylist(playlist: Playlist, song: Song): boolean {
-        playlist.addSong(song);
-        if(!this.updatePlaylist(playlist)) {
-            return false;
-        }
-        return true;
+        playlist.addSong(song)
+        return(this.updatePlaylist(playlist));
     }
 
     // playlist param will be modified
     // Returning false means the service doesn't have this playlist.
     // Make sure you use the service properly.
     public removeFromPlaylist(playlist: Playlist, song: Song): boolean {
-        playlist.removeSong(song);
-        if(!this.updatePlaylist(playlist)) {
-            return false;
-        }
-        return true;
+        return(playlist.removeSong(song) && this.updatePlaylist(playlist));
     }
 
     private getPlaylistIndex(id: number) {

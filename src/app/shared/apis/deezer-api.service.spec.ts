@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, inject, async } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { JsonpModule, Headers } from '@angular/http';
 import { DeezerApiService } from './deezer-api.service';
 import { Song } from './iapi.service';
