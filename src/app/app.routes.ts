@@ -10,7 +10,7 @@ import { SearchComponent } from './search/search.component';
 export const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'playlist', component: PlaylistComponent },
-  { path: '', redirectTo: '/search', pathMatch: 'full'}
+  { path: '', redirectTo: 'search', pathMatch: 'full'}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);

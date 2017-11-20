@@ -13,12 +13,28 @@
     <ng-sidebar-container>
 
       <!-- A sidebar -->
-      <ng-sidebar #sidebar [position]="left"  [mode]="slide" [showBackdrop]="_showBackdrop">
+      <ng-sidebar #sidebar [position]="left"  [mode]="_MODES[_modeNum]" [showBackdrop]="_showBackdrop">
         <ul>
           <li class=" btn " routerLink="search">Search</li>
            <li class=" btn " routerLink="playlist">Playlists</li>
         </ul>
       </ng-sidebar>
+
+
+<!-- <md-sidenav #sideNav mode="push" class="md-sidenav-left" >
+
+
+<li class=" btn " routerLink="search">Search</li>
+<li class=" btn " routerLink="playlist">Playlists</li>
+</md-sidenav> -->
+
+
+<!--  <md-sidenav  mode="push" opened="true" md-component-id="left" class="md-sidenav-left" md-is-locked-open="true">
+      <li class=" btn " routerLink="search">Search</li>
+<li class=" btn " routerLink="playlist">Playlists</li>
+    </md-sidenav> -->
+
+
 
       <!-- Page content -->
      <!--  <div ng-sidebar-content>
