@@ -13,7 +13,8 @@ export class SearchComponent implements OnInit {
     private musicService: MusicService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   title = 'Search';
 
@@ -21,7 +22,7 @@ export class SearchComponent implements OnInit {
 
   observables = null;
 
-  playl = ["1", "2"];
+  playlist = [];
 
   public search(Sparam: string) {
     this.songs = [];
@@ -35,6 +36,11 @@ export class SearchComponent implements OnInit {
         //this.musicService.play(res[0]);
       });
     }
+
+    var items = this.musicService.getPlaylists();
+    items.forEach((item, index) => {
+      this.playlist.push({ 'id': item.id, 'name': item.name });
+    });
   }
 
   public play(i) {

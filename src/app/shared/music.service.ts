@@ -64,7 +64,7 @@ export class MusicService {
     this.nextPlaylistId = 0;
   }
 
-  public createPlaylist(name: string, songs: Song[]): Playlist {
+  public createPlaylist(name: string, songs: Song[] = []): Playlist {
     let playlist = new Playlist(this.nextPlaylistId++, name);
     for (let i = 0; i < songs.length; i++) {
       playlist.addSong(songs[i]);

@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./playlist.component.scss']
 })
 
-export class PlaylistComponent implements OnInit{
-	constructor(){}
+export class PlaylistComponent implements OnInit {
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  title = 'Playlists';
 }
