@@ -12,13 +12,22 @@ export class Song {
     streamUrl;
     playlistId;
 
-    constructor() {
+    constructor(data: any = null) {
         this.title = null;
         this.album = null;
         this.authors = [];
         this.duration = null;
         this.streamUrl = null;
         this.playlistId = null;
+
+        if(data !== null) {
+            this.title = data.title;
+            this.album = data.album;
+            this.authors = data.authors;
+            this.duration = data.duration;
+            this.streamUrl = data.streamUrl;
+            this.playlistId = data.playlistId;
+        }
     }
 }
 
