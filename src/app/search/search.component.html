@@ -9,10 +9,12 @@
     <tr>
       <th>Song Title</th>
       <th>Artist</th>
+      <th></th>
     </tr>
-    <tr *ngFor="let song of songs; let i = index" [id] = song.record (click)="play(i)">
+    <tr *ngFor="let song of songs; let i = index" (click)="play(i)">
       <td>{{song.name}}</td>
       <td>{{song.artist}}</td>
+      <td><button class="btn btn-primary" (click)="addToPlaylist(i)">Add to playlist</button></td>
     </tr>
   </table>
 <template>

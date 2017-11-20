@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicService } from "../shared/music.service"
 
+// import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -9,8 +11,15 @@ import { MusicService } from "../shared/music.service"
 
 export class SearchComponent implements OnInit {
   constructor(
-    private musicService: MusicService
+    private musicService: MusicService,
+    // public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    // @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
+
+  // onNoClick(): void {
+  //   this.dialogRef.close();
+  // }
+
   ngOnInit() { }
 
   title = 'Search Component';
@@ -38,4 +47,17 @@ export class SearchComponent implements OnInit {
       this.musicService.play(res[i]);
     })
   }
+
+  // public addToPlaylist(i) {
+  //   //   let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+  //   //     width: '250px',
+  //   //     data: { name: this.name, animal: this.animal }
+  //   //   });
+  //   //
+  //   //   dialogRef.afterClosed().subscribe(result => {
+  //   //     console.log('The dialog was closed');
+  //   //     this.animal = result;
+  //   //   });
+  //   // }
+  // }
 }
