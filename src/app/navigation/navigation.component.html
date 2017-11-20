@@ -10,16 +10,16 @@
 </div> -->
 
  <!-- Container for sidebar(s) + page content -->
-    <ng-sidebar-container>
+    <!-- <ng-sidebar-container> -->
 
       <!-- A sidebar -->
-      <ng-sidebar #sidebar [position]="left"  [mode]="_MODES[_modeNum]" [showBackdrop]="_showBackdrop">
+  <!--     <ng-sidebar #sidebar [position]="left"  [mode]="_MODES[_modeNum]" [showBackdrop]="_showBackdrop">
         <ul>
           <li class=" btn " routerLink="search">Search</li>
            <li class=" btn " routerLink="playlist">Playlists</li>
         </ul>
       </ng-sidebar>
-
+ -->
 
 <!-- <md-sidenav #sideNav mode="push" class="md-sidenav-left" >
 
@@ -41,4 +41,26 @@
         <button (click)="_toggleSidebar()">Toggle sidebar</button>
       </div> -->
 
-    </ng-sidebar-container>
+    <!-- </ng-sidebar-container> -->
+
+
+
+ <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">MusicApp</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    
+      <ul class="nav navbar-nav">
+       <li class=" btn " routerLink="search">Search</li>
+        <li class=" btn " routerLink="playlist">Playlists</li>
+  
+      </ul>
+    <!-- </div>/.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
