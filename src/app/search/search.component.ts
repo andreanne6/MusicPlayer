@@ -14,6 +14,8 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.playlist = this.musicService.getPlaylists();
+    //console.log(this.playlist);
   }
 
   title = 'Search';
@@ -36,11 +38,6 @@ export class SearchComponent implements OnInit {
         //this.musicService.play(res[0]);
       });
     }
-
-    var items = this.musicService.getPlaylists();
-    items.forEach((item, index) => {
-      this.playlist.push({ 'id': item.id, 'name': item.name });
-    });
   }
 
   public play(i) {
@@ -49,11 +46,13 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  public addToPlaylist(i) {
+  // public addToPlaylist(i) {
+  //
+  // }
 
-  }
-
-  changed() {
-    console.log("changed");
+  changed(i, item) {
+    this.playlist[item].addSong(this.songs[i]);
+    console.log(this.playlist);
+    //console.log(this.musicService.getPlaylists());
   }
 }

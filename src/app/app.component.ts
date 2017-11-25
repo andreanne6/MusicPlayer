@@ -19,4 +19,15 @@ export class AppComponent {
         this.musicService.play(res[0]);
       });
   }
+
+  ngOnInit() {
+    var availablePlaylists = this.musicService.getPlaylists();
+    //console.log(availablePlaylists);
+    if (availablePlaylists.length == 0) {
+      this.musicService.createPlaylist("Default Playlis");
+      this.musicService.createPlaylist("Default Playlis 2");
+      this.musicService.createPlaylist("Default Playlis 3");
+      //console.log(this.musicService.getPlaylists());
+    }
+  }
 }

@@ -1,3 +1,17 @@
-<h1>
-    {{title}}
-</h1>
+<h1>{{title}}</h1>
+
+<div id="top">
+  <!-- <select *ngFor="let item of playlist" class="list-group-item" [class.active]="item === selectedItem" (click)="onSelectP(item)"> -->
+  <select class="form-control" ng-model="selection" (change)="changed($event.target.value)">
+    <option value="Add to playlist" selected class="hideoption">Choose a playlist</option>
+    <option *ngFor="let item of playlist" value={{item.id}}>{{item.name}}</option>
+    </select>
+</div>
+
+<div id="right" *ngIf="selectedItem">
+  <ul class="list-group">
+    <li *ngFor="let item of songs" class="list-group-item" [class.active]="item === selectedSong" (click)="onSelectS(item)">
+      {{item.name}}
+    </li>
+  </ul>
+</div>
