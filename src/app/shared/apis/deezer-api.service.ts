@@ -38,7 +38,7 @@ export class DeezerApiService extends IApiService {
 
         song.title = item.title;
         song.album = item.album.title;
-        song.authors = item.artist.name;
+        song.authors = [item.artist.name];
         song.duration = 30;
         song.streamUrl = item.preview;
 
