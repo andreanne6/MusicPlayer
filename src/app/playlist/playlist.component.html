@@ -1,0 +1,34 @@
+<h1>
+    {{title}}
+</h1>
+
+<!-- Toolbar - Create -->
+<div class="input-group">
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-default" (click)="create()">Create a playlist</button>
+  </span>
+  <input type="text" class="form-control" (keyup.enter)="onSubmit($event.target.value)" placeholder="Enter name" [style.display]="playlist_hidden">
+</div>
+
+<template [ngIf]="!this.musicService.getPlaylists().length">
+	<h3> You currently have no playlist</h3>
+</template>
+ 
+<template [ngIf]="this.musicService.getPlaylists().length">
+  <table class="table">
+    <tr>
+      <th>Playlist</th>
+      <th>Id</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let playlist of playlists;let i = index" >
+      <td>{{playlist.name}}</td>
+      <td>{{playlist.id}}</td>
+      <td>
+       <button type="button" class="btn btn-default"(click)="remove(i)">Remove a playlist</button>
+      </td>
+    </tr>
+  </table>
+<template>
+
+

@@ -1,0 +1,18 @@
+@import './../../sass/_variables.scss';
+
+h1{
+  color: $warmyellow-color;
+}
+
+h3{
+	color: $inverted-color;	
+}
+
+tr{
+  color: $warmyellow-color;
+}
+
+td{
+  vertical-align: middle !important;
+  color: $inverted-color;
+}
