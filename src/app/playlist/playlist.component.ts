@@ -25,6 +25,8 @@ export class PlaylistComponent implements OnInit {
 
   songs = [];
 
+  selectedPlaylist = null;
+
   onSelectP(p) {
     this.selectedItem = p;
     this.songs = p.songs;
@@ -33,6 +35,7 @@ export class PlaylistComponent implements OnInit {
 
   changed(val) {
     this.selectedItem = this.playlist[val];
+    this.selectedPlaylist = val;
     this.songs = this.playlist[val].songs;
     console.log(this.songs);
   }
@@ -40,6 +43,14 @@ export class PlaylistComponent implements OnInit {
   onSelectS(p) {
     console.log(p);
     //this.musicService.play(p);
+  }
+
+  play(i) {
+    this.musicService.play(this.songs[i]);
+  }
+
+  removeS(i) {
+    this.musicService.removeFromPlaylist(this.playlist[this.selectedPlaylist], this.songs[i]);
   }
 
 }

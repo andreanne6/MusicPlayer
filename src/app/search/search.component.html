@@ -12,8 +12,8 @@
       <th></th>
     </tr>
     <tr *ngFor="let song of songs; let i = index">
-      <td (click)="play(i)">{{song.name}}</td>
-      <td (click)="play(i)">{{song.artist}}</td>
+      <td (click)="play(i)">{{song.title}}</td>
+      <td (click)="play(i)">{{song.authors}}</td>
       <td>
         <select class="form-control" ng-model="selection" (change)="changed(i, $event.target.value)">
           <option value="Add to playlist" selected class="hideoption">Add to playlist</option>
@@ -22,7 +22,7 @@
       </td>
     </tr>
   </table>
-<template>
+</template>
 
 <!-- <p-autoComplete
   [ngModel]="song"

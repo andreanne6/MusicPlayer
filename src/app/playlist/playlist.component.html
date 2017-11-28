@@ -8,10 +8,22 @@
     </select>
 </div>
 
-<div id="right" *ngIf="selectedItem">
-  <ul class="list-group">
+<div id="right">
+  <!-- <ul class="list-group">
     <li *ngFor="let item of songs" class="list-group-item" [class.active]="item === selectedSong" (click)="onSelectS(item)">
       {{item.name}}
     </li>
-  </ul>
+  </ul> -->
+  <table class="table" *ngIf="songs.length">
+    <tr>
+      <th>Song Title</th>
+      <th>Artist</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let song of songs; let i = index">
+      <td (click)="play(i)">{{song.title}}</td>
+      <td (click)="play(i)">{{song.authors}}</td>
+      <td><button type="button" class="btn btn-danger" (click)="removeS(i)">x</button></td>
+    </tr>
+  </table>
 </div>

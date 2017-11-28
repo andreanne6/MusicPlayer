@@ -26,15 +26,18 @@ export class SearchComponent implements OnInit {
 
   playlist = [];
 
+  addthissong = null;
+
   public search(Sparam: string) {
     this.songs = [];
     if (Sparam != "") {
       this.observables = this.musicService.searchMusic(Sparam);
       this.observables.subscribe(res => {
         res.forEach((item, index) => {
-          this.songs.push({ 'record': index, 'name': item.title, 'artist': item.authors });
+          //this.songs.push({ 'record': index, 'name': item.title, 'artist': item.authors });
+          this.songs.push(item);
         })
-        console.log(res);
+        //console.log(res);
         //this.musicService.play(res[0]);
       });
     }
@@ -51,8 +54,6 @@ export class SearchComponent implements OnInit {
   // }
 
   changed(i, item) {
-    this.playlist[item].addSong(this.songs[i]);
-    console.log(this.playlist);
-    //console.log(this.musicService.getPlaylists());
+    this.musicService.addToPlaylist(this.playlist[item], this.songs[i]);
   }
 }

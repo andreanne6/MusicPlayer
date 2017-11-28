@@ -34,3 +34,20 @@ ul{
   height:0;
   font-size:0;
 }
+
+tr:hover{
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.22);
+  border-radius: 4px;
+}
+
+tr{
+  color: $warmyellow-color;
+}
+
+td{
+  vertical-align: middle !important;
+  // height: 5px;
+  // line-height:5px;
+  color: $inverted-color;
+}
