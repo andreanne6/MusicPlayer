@@ -1,5 +1,6 @@
 //angular
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
 //rxjs
 import { Observable } from 'rxjs/Rx'
@@ -50,19 +51,23 @@ export class MusicService {
   private audio;
   private musicApis;
   public paused = true;
-  public song; 
+  public song;
   public current;
 
   private playlists;
   private nextPlaylistId;
 
+  private playlistServiceUrl = "http://localhost:3001";
+  private musicServiceUrl = "http://localhost:3000";
+
   constructor(
-    private spotify: SpotifyApiService,
+    /*private spotify: SpotifyApiService,
     private jamendo: JamendoApiService,
-    private deezer: DeezerApiService
+    private deezer: DeezerApiService*/
+    private http: Http
   ) {
     this.audio = new Audio();
-    this.musicApis = [spotify, jamendo, deezer];
+    //this.musicApis = [spotify, jamendo, deezer];
     this.playlists = [];
     this.nextPlaylistId = 0;
     this.song = '';
@@ -136,16 +141,26 @@ export class MusicService {
   public getPlaylists() {
     return this.playlists;
   }
-  
-  public searchMusic(searchTerm: string): Observable<Song[]> {
-    let observables = [];
-    for (let i = 0; i < this.musicApis.length; i++) {
-      observables.push(this.musicApis[i].findSongs(searchTerm));
-    }
 
-    return Observable
-      .forkJoin(observables)
-      .map(arrayOfArrayOfSongs => this.flatten(arrayOfArrayOfSongs));
+  public searchMusic(searchTerm: string): Observable<Song[]> {
+    return this.http
+        .get(`${this.musicServiceUrl}/${searchTerm}`)
+        .map(results => results.json())
+        .map(json => this.jsonToSongs(json));
+  }
+
+  private jsonToSongs(json: any) {
+    console.log(json);
+    let songs = [];
+    const jsonSongsList = json.songs;
+    for(let i = 0; i < jsonSongsList.length; i++) {
+        let jsonSong = jsonSongsList[i];
+
+        if(jsonSong.streamUrl) {
+            songs.push(new Song(jsonSong));
+        }
+    }
+    return songs;
   }
 
   public play(song: Song): void {

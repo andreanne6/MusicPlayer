@@ -1,47 +1,192 @@
 // ./main.js
 const { app, BrowserWindow } = require('electron');
-
 const appUrl = "http://localhost:4200";
-let win = null;
+const NB_APIS = 3;
+const APIS = [spotifyQuery, jamendoQuery, deezerQuery];
 
-startBackend();
+musicService();
+playlistService();
 
-function startBackend() {
-    var express = require('express');
-    backend = express();
-    port = process.env.PORT || 3000;
+//musicService
+const spotifyClientId = "b600e89282ae451fbc4c687673b3517e";
+let spotifyToken = null;
+let jsonSongsList = [];
+let nbQueries = 0;
 
-    backend.get('/tokens/spotify', function (req, res) {
-        getSpotifyToken(res);
-    });
+function musicService() {
+    let express = require('express');
+    let backend = express();
+    let port = process.env.PORT || 3000;
+
+    spotifyGetToken();
+
+    backend.get('/:search', searchMusic);
 
     backend.listen(port);
-    console.log('RESTful API backend started on: ' + port);
+    console.log('musicService started on: ' + port);
 }
 
-function getSpotifyToken(res) {
-    var request = require('request');
-    const clientId = "b600e89282ae451fbc4c687673b3517e";
-    const clientSecret = "aa073ec39709468990e99679e6401bd1";
+function searchMusic(req, res) {
+  jsonSongsList = [];
+  for(let i = 0; i < APIS.length; i++) {
+    search = req.params.search.replace(" ", "+");
+    APIS[i](search, res);
+  }
+}
 
-    // your application requests authorization
-    var authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        headers: {
-            'Authorization': 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64'))
-        },
-        form: {
-            grant_type: 'client_credentials'
-        },
-        json: true
-    };
+function spotifyQuery(search, res) {
+  var request = require('request');
+  const apiUrl = "https://api.spotify.com/v1";
+  const queryUrl = `${apiUrl}/search?client_id=${spotifyClientId}&q=${search}&type=track`;
+
+  const queryOptions = spotifyQueryOptions(queryUrl);
+
+  request.get(queryOptions, function(error, response, body) {
+    if(!error && response && response.statusCode == 200) {
+      spotifyAddSongs(body);
+    }
+    console.log("Spotify query done");
+    tryToRespond(res);
+  });
+}
+
+function spotifyAddSongs(spotifyData) {
+  let itemList = spotifyData.tracks.items;
+  for(let i = 0; i < itemList.length; i++) {
+      let item = itemList[i];
+
+      if(item.preview_url) {
+          let jsonSong = spotifyItemToSong(item);
+          jsonSongsList.push(jsonSong);
+      }
+  }
+}
+
+function spotifyItemToSong(item) {
+    return {
+      title: item.name,
+      album: item.album.name,
+      authors: only("name", item.artists),
+      duration: 30,
+      streamUrl: item.preview_url
+    }
+}
+
+function only(key, list) {
+    let newList = [];
+    for(let i = 0; i < list.length; i++) {
+        newList.push(list[i][key]);
+    }
+    return newList;
+}
+
+function spotifyQueryOptions(queryUrl) {
+  return {
+      url: queryUrl,
+      headers: {
+        'Authorization': `Bearer ${spotifyToken}`
+      },
+      json: true
+    }
+}
+
+function jamendoQuery(search, res) {
+  console.log("Jamendo query");
+  tryToRespond(res);
+}
+
+function deezerQuery(search, res) {
+  console.log("Deezer query");
+  tryToRespond(res);
+}
+
+function tryToRespond(res) {
+  if(++nbQueries == APIS.length) {
+    nbQueries = 0;
+    respond(res, {songs: flatten(jsonSongsList)});
+    console.log("Responded");
+  }
+}
+
+function flatten(arrayOfArrays) {
+  return arrayOfArrays.reduce((acc, array) => acc.concat(array), []);
+}
+
+function spotifyGetToken() {
+    var request = require('request');
+    var authOptions = spotifyAuthOptions()
 
     request.post(authOptions, function(error, response, body) {
-        // use the access token to access the Spotify Web API
-        res.set('Access-Control-Allow-Origin', appUrl);
-        res.send(body.access_token);
+        spotifyToken = body.access_token;
     });
 }
+
+function spotifyAuthOptions() {
+  const spotifyUrl = "https://accounts.spotify.com/api/token";
+  const clientId = "b600e89282ae451fbc4c687673b3517e";
+  const clientSecret = "aa073ec39709468990e99679e6401bd1";
+
+  // your application requests authorization
+  return {
+      url: spotifyUrl,
+      headers: {
+          'Authorization': 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64'))
+      },
+      form: {
+          grant_type: 'client_credentials'
+      },
+      json: true
+  };
+}
+
+//playlistService
+function playlistService() {
+    let express = require('express');
+    let backend = express();
+    let port = process.env.PORT || 3001;
+
+    backend.post('/new', createPlaylist);
+    backend.post('/:playlist/add', addSong);
+    backend.post('/:playlist/remove', removeSong);
+    backend.delete('/:playlist', deletePlaylist);
+    backend.get('/:playlist', getPlaylist);
+    backend.get('/playlists', getPlaylists);
+
+    backend.listen(port);
+    console.log('playlistService started on: ' + port);
+}
+
+function createPlaylist(req, res) {
+
+}
+
+function addSong(req, res) {
+
+}
+
+function removeSong(req, res) {
+
+}
+
+function deletePlaylist(req, res) {
+
+}
+
+function getPlaylist(req, res) {
+
+}
+
+function getPlaylists(req, res) {
+
+}
+
+function respond(res, response) {
+  res.set('Access-Control-Allow-Origin', appUrl);
+  res.send(response);
+}
+
+//electron app
+let win = null;
 
 app.on('ready', function () {
 
@@ -49,7 +194,7 @@ app.on('ready', function () {
     win = new BrowserWindow({width: 1000, height: 600});
 
     // Specify entry point
-    win.loadURL('http://localhost:4200');
+    win.loadURL(appUrl);
 
     // Show dev tools
     // Remove this line before distributing
