@@ -150,7 +150,6 @@ export class MusicService {
   }
 
   private jsonToSongs(json: any) {
-    console.log(json);
     let songs = [];
     const jsonSongsList = json.songs;
     for(let i = 0; i < jsonSongsList.length; i++) {
