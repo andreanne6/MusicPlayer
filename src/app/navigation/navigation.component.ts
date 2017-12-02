@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class NavigationComponent implements OnInit{
-  private _MODES: Array<string> = ['over', 'push', 'slide'];
-  private _modeNum: number = 2;
-  private _showBackdrop: boolean = true;
 	constructor(){}
-  ngOnInit() {}
+	ngOnInit() {}
 }

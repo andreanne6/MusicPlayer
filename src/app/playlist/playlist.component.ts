@@ -4,7 +4,7 @@ import { MusicService } from "../shared/music.service";
 @Component({
   selector: 'playlist',
   templateUrl: './playlist.component.html',
-  styleUrls: ['./playlist.component.scss']
+  styleUrls: ['./playlist.component.scss'],
 })
 
 export class PlaylistComponent implements OnInit {
