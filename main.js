@@ -10,15 +10,14 @@ playlistService();
 //   MUSIC SERVICE   //
 //                   //
 ///////////////////////
-//Apis
 const QUERY = [spotifyQuery, jamendoQuery, deezerQuery];
 const SPOTIFY = 0;
 const JAMENDO = 1;
 const DEEZER = 2;
-const CLIENT_ID = ["b600e89282ae451fbc4c687673b3517e", "c38b5501"]
-const GET_ITEM_LIST = [spotifyGetItemList, jamendoGetItemList];
-const CAN_ADD_ITEM = [spotifyCanAddItem, jamendoCanAddItem];
-const ITEM_TO_SONG = [spotifyItemToSong, jamendoItemToSong];
+const CLIENT_ID = ["b600e89282ae451fbc4c687673b3517e", "c38b5501", "none"];
+const GET_ITEM_LIST = [spotifyGetItemList, jamendoGetItemList, deezerGetItemList];
+const CAN_ADD_ITEM = [spotifyCanAddItem, jamendoCanAddItem, deezerCanAddItem];
+const ITEM_TO_SONG = [spotifyItemToSong, jamendoItemToSong, deezerItemToSong];
 
 let spotifyToken = null;
 let jsonSongsList = [];
@@ -118,8 +117,15 @@ function jamendoQuery(search, res) {
 }
 
 function deezerQuery(search, res) {
-  console.log("Deezer not implemented");
-  tryToRespond(res);
+  const apiUrl = "https://api.deezer.com";
+  const queryUrl = `${apiUrl}/search?q=${search}&output=json`;
+  const queryOptions = {
+    url: queryUrl,
+    json: true
+  }
+
+  console.log("Deezer query");
+  queryApi(DEEZER, queryOptions, res);
 }
 
 /**********************
@@ -140,6 +146,10 @@ function jamendoGetItemList(data) {
   return data.results;
 }
 
+function deezerGetItemList(data) {
+  return data.data;
+}
+
 /**********************
 *                     *
 *     CAN_ADD_ITEM    *
@@ -156,6 +166,10 @@ function spotifyCanAddItem(item) {
 
 function jamendoCanAddItem(item) {
   return true;
+}
+
+function deezerCanAddItem(item) {
+  return !!item.preview;
 }
 
 /**********************
@@ -185,6 +199,16 @@ function jamendoItemToSong(item) {
     authors: [item.artist_name],
     duration: item.duration,
     streamUrl: item.audio
+  }
+}
+
+function deezerItemToSong(item) {
+  return {
+    title: item.title,
+    album: item.album.title,
+    authors: [item.artist.name],
+    duration: 30,
+    streamUrl: item.preview
   }
 }
 
