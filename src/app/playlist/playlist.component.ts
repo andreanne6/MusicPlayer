@@ -41,18 +41,6 @@ export class PlaylistComponent implements OnInit {
     // console.log(p.songs);
   }
 
-  // changed(val) {
-  //   this.selectedItem = this.playlist[val];
-  //   this.selectedPlaylist = val;
-  //   this.songs = this.playlist[val].songs;
-  //   // console.log(this.songs);
-  // }
-
-  // onSelectS(p) {
-  //   // console.log(p);
-  //   //this.musicService.play(p);
-  // }
-
   play(i) {
     // console.log(this.songs[i]);
     this.musicService.play(this.songs[i]);

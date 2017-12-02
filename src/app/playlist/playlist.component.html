@@ -1,11 +1,6 @@
 <h1>{{title}}</h1>
 
 <div id="top">
-  <!-- <select *ngFor="let item of playlist" class="list-group-item" [class.active]="item === selectedItem" (click)="onSelectP(item)"> -->
-  <!-- <select class="form-control" ng-model="selection" (change)="changed($event.target.value)">
-    <option value="Add to playlist" selected class="hideoption">Choose a playlist</option>
-    <option *ngFor="let item of playlist" value={{item.id}}>{{item.name}}</option>
-  </select> -->
   <ul class="list-group" *ngIf="playlist.length">
     <li *ngFor="let item of playlist" class="list-group-item" [class.active]="item === selectedPlaylist" (click)="onSelectP(item)">
       {{item.name}}
@@ -25,11 +20,6 @@
 </div>
 
 <div id=" right ">
-  <!-- <ul class="list-group ">
-    <li *ngFor="let item of songs " class="list-group-item " [class.active]="item===s electedSong " (click)="onSelectS(item) ">
-      {{item.name}}
-    </li>
-  </ul> -->
   <table class="table " *ngIf="songs.length ">
     <tr>
       <th>Song Title</th>

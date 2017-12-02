@@ -34,11 +34,9 @@ export class SearchComponent implements OnInit {
       this.observables = this.musicService.searchMusic(Sparam);
       this.observables.subscribe(res => {
         res.forEach((item, index) => {
-          //this.songs.push({ 'record': index, 'name': item.title, 'artist': item.authors });
           this.songs.push(item);
         })
         //console.log(res);
-        //this.musicService.play(res[0]);
       });
     }
   }
@@ -54,6 +52,6 @@ export class SearchComponent implements OnInit {
   }
 
   trackByFn(index, item) {
-    return index; // or item.id
+    return index;
   }
 }
