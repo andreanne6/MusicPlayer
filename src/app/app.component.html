@@ -6,4 +6,11 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-<player></player>
+<player
+    (backward)="this.musicService.handleBackward()"
+    (forward)="this.musicService.handleForward()"
+    (pauseplay)="this.musicService.handlePausePlay()"
+    (stop)="this.musicService.handleStop()"
+    [paused]="this.musicService.paused"
+    [song_name]="this.musicService.song"
+></player>

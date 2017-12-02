@@ -43,13 +43,10 @@
     <tr *ngFor="let playlist of playlists;let i = index" (click)="selectPlaylist(i)">
       <td >{{playlist.name}}</td>
       <td>{{playlist.id}}</td>
-      <td> <button type="button" class="btn btn-default"(click)="removePlaylist(i)">Remove</button></td>
+      <td> <button type="button" class="btn btn-Danger"(click)="removePlaylist(i)">x</button></td>
     </tr>
   </table>
 <template>
 	
-<!-- <template [ngIf]="this.songs.length"> -->
-
- <!-- </template> -->
 
 

@@ -8,10 +8,30 @@ import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 
 export class PlayerComponent implements OnInit{
 	constructor(){}
-	ngOnInit() {}
+
 	@Input() paused;
+	@Input() song_name;
 	@Output() backward = new EventEmitter();
 	@Output() pauseplay = new EventEmitter();
 	@Output() forward = new EventEmitter();
 	@Output() stop = new EventEmitter();
+	ngOnInit() {
+		let paused = this.paused;
+		let song_name = this.song_name;
+	}
+	c_stop(){
+		this.stop.emit();
+	}
+
+	c_backward(){
+		this.backward.emit();
+	}
+
+	c_pauseplay(){
+		this.pauseplay.emit();
+	}
+
+	c_forward(){
+		this.forward.emit()
+	}
 }

@@ -3,4 +3,37 @@
 .player{
   background-color: $navy-color ;
   border-color:$navy-color;
+  padding : 10px;
+  padding-left: 20px;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.btn-toolbar{
+	background-color: $navy-color ;
+}
+
+.player__stop{
+	background-color: $navy-color ;
+}
+
+.player__forward{
+	background-color: $navy-color ;
+}
+
+.player__paused{
+	background-color: $navy-color ;
+}
+
+.player__notpaused{
+	background-color: $navy-color ;
+}
+
+.player__backward{
+	background-color: $navy-color ;
+}
+
+.current_song{
+  color: $inverted-color;
+  padding-left: 20px; 
 }

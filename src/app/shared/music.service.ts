@@ -49,7 +49,9 @@ export class Playlist {
 export class MusicService {
   private audio;
   private musicApis;
-  private paused = true;
+  public paused = true;
+  public song; 
+  public current;
 
   private playlists;
   private nextPlaylistId;
@@ -63,6 +65,7 @@ export class MusicService {
     this.musicApis = [spotify, jamendo, deezer];
     this.playlists = [];
     this.nextPlaylistId = 0;
+    this.song = '';
   }
 
   public createPlaylist(name: string, songs: Song[] = []): Playlist {
@@ -133,18 +136,7 @@ export class MusicService {
   public getPlaylists() {
     return this.playlists;
   }
-
-  /*
-  Subscribing to the observable will provide a list of tracks.
-  Example of how to use
-  """
-  this.musicService.searchMusic("i'm blue")
-      .subscribe(songs => {
-          this.searchResults = songs;
-          this.musicService.play(songs[0]);
-      });
-  """
-  */
+  
   public searchMusic(searchTerm: string): Observable<Song[]> {
     let observables = [];
     for (let i = 0; i < this.musicApis.length; i++) {
@@ -159,6 +151,7 @@ export class MusicService {
   public play(song: Song): void {
     this.load(song);
     this.audio.play(song);
+    this.song = song.title;
   }
 
  public handlePausePlay() {
@@ -169,6 +162,27 @@ export class MusicService {
         this.paused = false;
         this.audio.pause()
       }
+  }
+
+  public handleStop() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.paused = false;
+  }
+
+  public handleBackward() {
+    let elapsed =  this.audio.currentTime;
+    if(elapsed >= 5) {
+      this.audio.currentTime = elapsed - 5;
+    }
+  }
+
+  public handleForward() {
+    let elapsed =  this.audio.currentTime;
+    const duration =  this.audio.duration;
+    if(duration - elapsed >= 5) {
+      this.audio.currentTime = elapsed + 5;
+    }
   }
 
   private load(song: Song): void {
