@@ -74,31 +74,17 @@ export class PlaylistComponent implements OnInit {
     if (this.selectedPlaylist == null) {
       this.musicService.deletePlaylist(id);
       this.playlist = this.musicService.getPlaylists();
-      if (this.playlist.length != 0) {
-        this.songs = this.playlist[0].songs;
-      }
-      else {
-        this.songs = [];
-      }
+      this.songs = [];
     } else if (this.selectedPlaylist.id == this.musicService.getPlaylist(id).id) {
       this.musicService.deletePlaylist(id);
       this.playlist = this.musicService.getPlaylists();
-      if (this.playlist.length != 0) {
-        this.selectedPlaylist = null;
-        this.songs = [];
-      }
-      else {
-        this.selectedPlaylist = [];
-        this.songs = [];
-      }
+      this.selectedPlaylist = null;
+      this.songs = [];
     }
     else {
       this.musicService.deletePlaylist(id);
       this.playlist = this.musicService.getPlaylists();
-      if (this.playlist.length != 0) {
-        this.songs = this.playlist[0].songs;
-      }
-      else {
+      if (this.playlist.length == 0) {
         this.songs = [];
       }
     }
