@@ -9,7 +9,7 @@
   <ul class="list-group" *ngIf="playlist.length">
     <li *ngFor="let item of playlist" class="list-group-item" [class.active]="item === selectedPlaylist" (click)="onSelectP(item)">
       {{item.name}}
-      <button type="button" class="removeItem" (click)="removePlaylist(item.id)">-</button>
+      <button type="button" class="removeItem" (click)="removePlaylist(item.id)">x</button>
     </li>
     <li class="list-group-item">
       <input type="text " class="inputInList " [(ngModel)]="newPlaylistName">
