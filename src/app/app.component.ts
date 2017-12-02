@@ -24,7 +24,9 @@ export class AppComponent {
     var availablePlaylists = this.musicService.getPlaylists();
     //console.log(availablePlaylists);
     if (availablePlaylists.length == 0) {
-      this.musicService.createPlaylist("Default Playlist");
+      this.musicService.createPlaylist("Default Playlist 1");
+      this.musicService.createPlaylist("Default Playlist 2");
+      this.musicService.createPlaylist("Default Playlist 3");
       //console.log(this.musicService.getPlaylists());
     }
   }

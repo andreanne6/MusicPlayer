@@ -17,7 +17,7 @@
       <td>
         <select class="form-control" ng-model="selection" (change)="changed(i, $event.target.value)">
           <option value="Add to playlist" selected class="hideoption">Add to playlist</option>
-          <option *ngFor="let item of playlist" value={{item.id}}>{{item.name}}</option>
+          <option *ngFor="let item of playlist;let j = index;trackBy: trackByFn" value={{j}}>{{item.name}}</option>
         </select>
       </td>
     </tr>

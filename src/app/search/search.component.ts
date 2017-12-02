@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.playlist = this.musicService.getPlaylists();
-    //console.log(this.playlist);
+    console.log(this.playlist);
   }
 
   title = 'Search';
@@ -49,11 +49,11 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  // public addToPlaylist(i) {
-  //
-  // }
-
   changed(i, item) {
     this.musicService.addToPlaylist(this.playlist[item], this.songs[i]);
+  }
+
+  trackByFn(index, item) {
+    return index; // or item.id
   }
 }
