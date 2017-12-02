@@ -8,6 +8,7 @@ import { SharedModule } from "./shared/shared.module";
 // Declarations
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { PlayerComponent } from './player/player.component';
 import { PlaylistModule } from './playlist/playlist.module';
 import { SearchModule } from './search/search.module';
 import { routing } from './app.routes';
@@ -23,7 +24,8 @@ import { routing } from './app.routes';
   ],
   declarations: [
     AppComponent,
-    NavigationComponent
+    NavigationComponent,
+    PlayerComponent
   ],
 
   providers: [],

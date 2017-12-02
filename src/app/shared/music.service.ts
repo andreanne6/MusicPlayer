@@ -49,6 +49,7 @@ export class Playlist {
 export class MusicService {
   private audio;
   private musicApis;
+  private paused = true;
 
   private playlists;
   private nextPlaylistId;
@@ -157,7 +158,17 @@ export class MusicService {
 
   public play(song: Song): void {
     this.load(song);
-    this.audio.play()
+    this.audio.play(song);
+  }
+
+ public handlePausePlay() {
+      if(this.audio.paused) {
+        this.paused = true;
+        this.audio.play()
+      } else {
+        this.paused = false;
+        this.audio.pause()
+      }
   }
 
   private load(song: Song): void {

@@ -2,29 +2,14 @@
 
 h1{
   color: $warmyellow-color;
-  margin-bottom: 50px;
 }
 
-ul{
-  width: 80%;
+h3{
+	color: $inverted-color;	
 }
 
-#top{
-  margin-bottom: 20px;
-  width: 80%;
-}
-
-.hideoption {
-  display:none;
-  visibility:hidden;
-  height:0;
-  font-size:0;
-}
-
-tr:hover{
-  cursor: pointer;
-  background-color: rgba(128, 128, 128, 0.22);
-  border-radius: 4px;
+h4{
+  color: $warmyellow-color;
 }
 
 tr{
@@ -36,32 +21,12 @@ td{
   color: $inverted-color;
 }
 
-.inputInList{
-  border: none;
-  background-color: transparent;
-  width: 80%;
+tr:hover{
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.22);
+  border-radius: 4px;
 }
 
-textarea:focus, input:focus{
-    outline: none;
-}
-
-.addItem{
-  float: right;
-  text-align:center;
-  vertical-align: middle;
-  // border-radius: 15px;
-  padding: 2px 7px 2px 7px;
-  width: 25px;
-  height: 25px;
-}
-
-.removeItem{
-  float: right;
-  text-align:center;
-  vertical-align: middle;
-  // border-radius: 15px;
-  padding: 2px 7px 2px 7px;
-  width: 25px;
-  height: 25px;
+p{
+	color: $inverted-color;
 }

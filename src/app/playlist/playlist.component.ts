@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicService } from "../shared/music.service";
+import { MusicService } from "../shared/music.service"
 
 @Component({
   selector: 'playlist',
@@ -7,76 +7,51 @@ import { MusicService } from "../shared/music.service";
   styleUrls: ['./playlist.component.scss'],
 })
 
-export class PlaylistComponent implements OnInit {
-  constructor(
-    private musicService: MusicService
-  ) { }
 
-  ngOnInit() {
-    this.playlist = this.musicService.getPlaylists();
-    if (this.playlist.length != 0) {
-      this.selectedPlaylist = this.playlist[0];
-      this.songs = this.playlist[0].songs;
-    }
-    // console.log(this.playlist);
-  }
 
-  title = 'Playlists';
+export class PlaylistComponent implements OnInit{
+	
+	playlists = [];
+	songs = [];
+	title = 'Playlists';
+	playlist_name:string;
+	modalId : string = 'modalId';
+	modal_options = {};
+	successEventName = 'successEvent';  
+	playlist_hidden:string = 'none';
+	selectedPlaylist = null;
+	constructor(private musicService: MusicService){}
+	
+	
+	ngOnInit() {
+		this.playlists = this.musicService.getPlaylists();
+	}
 
-  playlist = [];
+	create(){
+  		this.playlist_hidden = 'block';
+	}
 
-  selectedItem = [];
+	onSubmit(value: string): void {
+		this.musicService.createPlaylist(value , []);
+		alert(' Playlist ' + value + ' has been created');
+		console.log(value)
+	}
 
-  songs = [];
+	removePlaylist(id:number){
+		this.musicService.deletePlaylist(id);
+	}
 
-  selectedPlaylist = null;
+	selectPlaylist(i){	
+		this.selectedPlaylist = this.playlists[i];
+		this.songs = this.selectedPlaylist.songs;
+	}
 
-  newPlaylistName: string = "";
-
-  onSelectP(p) {
-    this.selectedPlaylist = p;
-    this.songs = p.songs;
-    console.log(p);
-    console.log(p.songs);
-    // console.log(p.songs);
-  }
-
-  play(i) {
+	playSong(i) {
     // console.log(this.songs[i]);
     this.musicService.play(this.songs[i]);
   }
 
-  removeS(i) {
+  removeSong(i) {
     this.musicService.removeFromPlaylist(this.selectedPlaylist, this.songs[i]);
   }
-
-  addPlaylist() {
-    this.musicService.createPlaylist(this.newPlaylistName);
-    this.newPlaylistName = "";
-    this.playlist = this.musicService.getPlaylists();
-    // console.log(this.newPlaylistName);
-  }
-
-  removePlaylist(id) {
-    var a = this.musicService.getPlaylist(id);
-    if (this.selectedPlaylist == null) {
-      this.musicService.deletePlaylist(id);
-      this.playlist = this.musicService.getPlaylists();
-      this.songs = [];
-    } else if (this.selectedPlaylist.id == this.musicService.getPlaylist(id).id) {
-      this.musicService.deletePlaylist(id);
-      this.playlist = this.musicService.getPlaylists();
-      this.selectedPlaylist = null;
-      this.songs = [];
-    }
-    else {
-      this.musicService.deletePlaylist(id);
-      this.playlist = this.musicService.getPlaylists();
-      if (this.playlist.length == 0) {
-        this.songs = [];
-      }
-    }
-    // console.log(this.playlist);
-  }
-
 }

@@ -8,6 +8,7 @@ import { MusicService } from "./shared/music.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+    paused = true;
   constructor(
     private musicService: MusicService
   ) { }
@@ -22,12 +23,8 @@ export class AppComponent {
 
   ngOnInit() {
     var availablePlaylists = this.musicService.getPlaylists();
-    //console.log(availablePlaylists);
     if (availablePlaylists.length == 0) {
-      this.musicService.createPlaylist("Default Playlist 1");
-      this.musicService.createPlaylist("Default Playlist 2");
-      this.musicService.createPlaylist("Default Playlist 3");
-      //console.log(this.musicService.getPlaylists());
+      this.musicService.createPlaylist("Default");
     }
   }
 }

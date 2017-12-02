@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'player',
@@ -8,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 
 export class PlayerComponent implements OnInit{
 	constructor(){}
-
-  ngOnInit() {}
+	ngOnInit() {}
+	@Input() paused;
+	@Output() backward = new EventEmitter();
+	@Output() pauseplay = new EventEmitter();
+	@Output() forward = new EventEmitter();
+	@Output() stop = new EventEmitter();
 }

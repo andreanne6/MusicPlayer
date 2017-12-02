@@ -1,35 +1,55 @@
-<h1>{{title}}</h1>
+<h1>
+    {{title}}
+</h1>
 
-<div id="top">
-  <ul class="list-group" *ngIf="playlist.length">
-    <li *ngFor="let item of playlist" class="list-group-item" [class.active]="item === selectedPlaylist" (click)="onSelectP(item)">
-      {{item.name}}
-      <button type="button" class="removeItem" (click)="removePlaylist(item.id)">x</button>
-    </li>
-    <li class="list-group-item">
-      <input type="text " class="inputInList " [(ngModel)]="newPlaylistName">
-      <button type="button " class="addItem" (click)="addPlaylist()" *ngIf="newPlaylistName" data-ng-model="New Playlist">+</button>
-    </li>
-  </ul>
-  <ul class="list-group" *ngIf="!playlist.length">
-    <li class="list-group-item">
-      <input type="text " class="inputInList " [(ngModel)]="newPlaylistName">
-      <button type="button " class="addItem" (click)="addPlaylist()" *ngIf="newPlaylistName" data-ng-model="New Playlist">+</button>
-    </li>
-  </ul>
+<br>
+
+<!-- Toolbar - Create -->
+<div class="input-group">
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-default" (click)="create()">Create a playlist</button>
+  </span>
+  <input type="text" class="form-control" (keyup.enter)="onSubmit($event.target.value)" placeholder="Enter name" [style.display]="playlist_hidden">
 </div>
 
-<div id=" right ">
-  <table class="table " *ngIf="songs.length ">
+<br>
+<template [ngIf]="this.songs.length">
+	<h4>You have selected the playlist {{this.selectedPlaylist.name}}</h4>
+	<table class="table" >
     <tr>
       <th>Song Title</th>
       <th>Artist</th>
       <th></th>
     </tr>
     <tr *ngFor="let song of songs; let i=index ">
-      <td (click)="play(i) ">{{song.title}}</td>
-      <td (click)="play(i) ">{{song.authors}}</td>
-      <td><button type="button " class="btn btn-danger " (click)="removeS(i) ">x</button></td>
+      <td (click)="playSong(i)">{{song.title}}</td>
+      <td (click)="playSong(i)">{{song.authors}}</td>
+      <td><button type="button " class="btn btn-danger " (click)="removeSong(i) ">x</button></td>
     </tr>
   </table>
-</div>
+</template>
+
+<template [ngIf]="!this.musicService.getPlaylists().length">
+	<h3> You currently have no playlist</h3>
+</template>
+
+<template [ngIf]="this.musicService.getPlaylists().length">
+  <table class="table">
+    <tr>
+      <th>Playlist</th>
+      <th>Id</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let playlist of playlists;let i = index" (click)="selectPlaylist(i)">
+      <td >{{playlist.name}}</td>
+      <td>{{playlist.id}}</td>
+      <td> <button type="button" class="btn btn-default"(click)="removePlaylist(i)">Remove</button></td>
+    </tr>
+  </table>
+<template>
+	
+<!-- <template [ngIf]="this.songs.length"> -->
+
+ <!-- </template> -->
+
+
