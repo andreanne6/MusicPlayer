@@ -8,8 +8,8 @@
 
 				</div>
 				<div class="btn-group" role="group">
-					<button class="player__paused btn btn-default" *ngIf="this.paused" (click)="c_pauseplay()"><img src="/../assets/pause.png"></button>
-					<button class="player__notpaused btn btn-default" *ngIf="!this.paused" (click)="c_pauseplay()"><img src="/../assets/play.png"></button>
+					<button class="player__paused btn btn-default" *ngIf="this.showPause" (click)="c_pauseplay()"><img src="/../assets/pause.png"></button>
+					<button class="player__notpaused btn btn-default" *ngIf="!this.showPause" (click)="c_pauseplay()"><img src="/../assets/play.png"></button>
 				</div>
 				<div class="btn-group" role="group">
 					<button class="player__stop btn btn-default" (click)="c_stop()" ><img src="/../assets/stop.png"></button>

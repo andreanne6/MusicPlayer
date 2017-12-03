@@ -9,14 +9,14 @@ import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 export class PlayerComponent implements OnInit{
 	constructor(){}
 
-	@Input() paused;
+	@Input() showPause;
 	@Input() song_name;
 	@Output() backward = new EventEmitter();
 	@Output() pauseplay = new EventEmitter();
 	@Output() forward = new EventEmitter();
 	@Output() stop = new EventEmitter();
 	ngOnInit() {
-		let paused = this.paused;
+		let paused = this.showPause;
 		let song_name = this.song_name;
 	}
 	c_stop(){

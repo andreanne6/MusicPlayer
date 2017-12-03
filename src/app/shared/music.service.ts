@@ -49,7 +49,7 @@ export class Playlist {
 export class MusicService {
   private audio;
   private musicApis;
-  public paused = true;
+  public showPause = false;
   public song; 
   public current;
 
@@ -149,17 +149,19 @@ export class MusicService {
   }
 
   public play(song: Song): void {
+
     this.load(song);
     this.audio.play(song);
+    this.showPause = true;
     this.song = song.title;
   }
 
  public handlePausePlay() {
       if(this.audio.paused) {
-        this.paused = true;
+        this.showPause = true;
         this.audio.play()
       } else {
-        this.paused = false;
+        this.showPause = false;
         this.audio.pause()
       }
   }
@@ -167,7 +169,7 @@ export class MusicService {
   public handleStop() {
     this.audio.pause();
     this.audio.currentTime = 0;
-    this.paused = false;
+    this.showPause = false;
   }
 
   public handleBackward() {
