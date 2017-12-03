@@ -15,18 +15,12 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.playlist = this.musicService.getPlaylists();
-    console.log(this.playlist);
   }
 
   title = 'Search';
-
   songs = [];
-
   observables = null;
-
   playlist = [];
-
-  addthissong = null;
 
   public search(Sparam: string) {
     this.songs = [];
@@ -36,7 +30,6 @@ export class SearchComponent implements OnInit {
         res.forEach((item, index) => {
           this.songs.push(item);
         })
-        //console.log(res);
       });
     }
   }
