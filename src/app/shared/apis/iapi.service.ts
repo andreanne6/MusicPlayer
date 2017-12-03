@@ -29,6 +29,17 @@ export class Song {
             this.playlistId = data.playlistId;
         }
     }
+
+    public toJson(): any {
+      return {
+        title: this.title,
+        album: this.album,
+        authors: this.authors,
+        duration: this.duration,
+        streamUrl: this.streamUrl,
+        playlistId: this.playlistId
+      }
+    }
 }
 
 @Injectable()

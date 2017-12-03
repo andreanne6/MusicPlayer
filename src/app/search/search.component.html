@@ -15,9 +15,9 @@
       <td (click)="play(i)">{{song.title}}</td>
       <td (click)="play(i)">{{song.authors}}</td>
       <td>
-        <select class="form-control" ng-model="selection" (change)="changed(i, $event.target.value)">
+        <select class="form-control" ng-model="selection" (change)="this.addSong($event.target.value, song)">
           <option value="Add to playlist" selected class="hideoption">Add to playlist</option>
-          <option *ngFor="let item of playlist;let j = index;trackBy: trackByFn" value={{j}}>{{item.name}}</option>
+          <option *ngFor="let playlist of playlists; let j = index; trackBy: trackByFn" value={{j}}>{{playlist.name}}</option>
         </select>
       </td>
     </tr>

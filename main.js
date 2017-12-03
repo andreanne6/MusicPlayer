@@ -253,45 +253,91 @@ function spotifyAuthOptions() {
   };
 }
 
-//playlistService
+////////////////////////
+//                    //
+//  PLAYLIST SERVICE  //
+//                    //
+////////////////////////
+let playlists = [];
+let nextPlaylistId = 0;
+
 function playlistService() {
   let express = require('express');
+  let cors = require('cors');
+  let bodyParser = require('body-parser');
   let backend = express();
   let port = process.env.PORT || 3001;
 
+  const corsOptions = {
+    origin: appUrl,
+    optionsSuccessStatus: 200
+  }
+  backend.use(cors(corsOptions));
+  backend.use(bodyParser.json());
+
   backend.post('/new', createPlaylist);
-  backend.post('/:playlist/add', addSong);
-  backend.post('/:playlist/remove', removeSong);
-  backend.delete('/:playlist', deletePlaylist);
-  backend.get('/:playlist', getPlaylist);
-  backend.get('/playlists', getPlaylists);
+  backend.put('/:id', updatePlaylist);
+  backend.delete('/:id', deletePlaylist);
+  backend.get('/all', getPlaylists);
+  backend.get('/:id', getPlaylist);
 
   backend.listen(port);
   console.log('playlistService started on: ' + port);
 }
 
 function createPlaylist(req, res) {
+  const playlist = req.body;
+  playlist.id = nextPlaylistId++;
+  playlist.nextSongId = 0;
 
+  playlists.push(playlist);
+  respond(res, {playlist: playlist});
+  console.log("Created playlist id: " + playlist.id);
 }
 
-function addSong(req, res) {
-
-}
-
-function removeSong(req, res) {
-
+function updatePlaylist(req, res) {
+  const playlistId = req.params.id;
+  const playlist = req.body.playlist;
+  for (let i = 0; i < playlists.length; i++) {
+    if (playlists[i].id == playlistId) {
+      playlists[i] = playlist;
+    }
+  }
+  respond(res, {playlists: playlists});
+  console.log("Updated playlist id: " + playlistId);
 }
 
 function deletePlaylist(req, res) {
-
+  const playlistId = req.params.id;
+  for (let i = 0; i < playlists.length; i++) {
+    if (playlists[i].id == playlistId) {
+      playlists.splice(i, 1);
+    }
+  }
+  respond(res, {playlists: playlists});
+  console.log("Deleted playlist id: " + playlistId);
 }
 
 function getPlaylist(req, res) {
+  const id = req.params.id;
+  let playlistFound = findPlaylist(id);
 
+  respond(res, {playlist: playlistFound});
+  console.log("Sent back playlist id: " + id);
+}
+
+function findPlaylist(playlistId) {
+  for (let i = 0; i < playlists.length; i++) {
+    if (playlists[i].id == playlistId) {
+      return playlists[i];
+    }
+  }
+  return null;
 }
 
 function getPlaylists(req, res) {
-
+  respond(res, {playlists: playlists});
+  console.log("Sent back all playlists");
 }
 
 //electron app

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicService } from "../shared/music.service"
+import { MusicService, Playlist } from "../shared/music.service"
 
 
 @Component({
@@ -9,24 +9,30 @@ import { MusicService } from "../shared/music.service"
 })
 
 export class SearchComponent implements OnInit {
+  title = 'Search';
+  songs = [];
+  observables = null;
+  playlists = [];
+  addthissong = null;
+
   constructor(
     private musicService: MusicService
   ) { }
 
   ngOnInit() {
-    this.playlist = this.musicService.getPlaylists();
-    console.log(this.playlist);
+    this.musicService
+      .getPlaylists()
+      .subscribe(playlists => {
+        this.playlists = playlists;
+        if (playlists.length == 0) {
+          this.musicService
+            .createPlaylist("Default")
+            .subscribe(playlist => {
+              this.playlists.push(playlist);
+            });
+        }
+      });
   }
-
-  title = 'Search';
-
-  songs = [];
-
-  observables = null;
-
-  playlist = [];
-
-  addthissong = null;
 
   public search(Sparam: string) {
     this.songs = [];
@@ -36,7 +42,6 @@ export class SearchComponent implements OnInit {
         res.forEach((item, index) => {
           this.songs.push(item);
         })
-        //console.log(res);
       });
     }
   }
@@ -47,8 +52,10 @@ export class SearchComponent implements OnInit {
     })
   }
 
-  changed(i, item) {
-    this.musicService.addToPlaylist(this.playlist[item], this.songs[i]);
+  addSong(playlistIndex, song) {
+    this.musicService
+      .addToPlaylist(this.playlists[playlistIndex], song)
+      .subscribe();
   }
 
   trackByFn(index, item) {

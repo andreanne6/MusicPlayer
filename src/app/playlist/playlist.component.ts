@@ -7,24 +7,21 @@ import { MusicService } from "../shared/music.service"
   styleUrls: ['./playlist.component.scss'],
 })
 
-
-
-export class PlaylistComponent implements OnInit{
-	
+export class PlaylistComponent implements OnInit {
 	playlists = [];
 	songs = [];
 	title = 'Playlists';
 	playlist_name:string;
 	modalId : string = 'modalId';
 	modal_options = {};
-	successEventName = 'successEvent';  
+	successEventName = 'successEvent';
 	playlist_hidden:string = 'none';
-	selectedPlaylist = null;
-	constructor(private musicService: MusicService){}
-	
-	
+	selectedPlaylistId = null;
+
+	constructor(private musicService: MusicService) {}
+
 	ngOnInit() {
-		this.playlists = this.musicService.getPlaylists();
+    this.refreshPlaylists();
 	}
 
 	create(){
@@ -32,26 +29,69 @@ export class PlaylistComponent implements OnInit{
 	}
 
 	onSubmit(value: string): void {
-		this.musicService.createPlaylist(value , []);
-		alert(' Playlist ' + value + ' has been created');
-		console.log(value)
+		this.musicService
+      .createPlaylist(value)
+      .subscribe(playlist => {
+        this.playlists.push(playlist);
+      });
 	}
 
-	removePlaylist(id:number){
-		this.musicService.deletePlaylist(id);
+	removePlaylist(playlistId){
+		this.musicService
+      .deletePlaylist(playlistId)
+      .subscribe(playlists => {
+        this.playlists = playlists;
+      });
 	}
 
-	selectPlaylist(i){	
-		this.selectedPlaylist = this.playlists[i];
-		this.songs = this.selectedPlaylist.songs;
+	selectPlaylist(playlistId) {
+		this.selectedPlaylistId = playlistId;
+		this.songs = this.selectedPlaylist().songs;
 	}
 
-	playSong(i) {
-    // console.log(this.songs[i]);
-    this.musicService.play(this.songs[i]);
+	playSong(song) {
+    this.musicService.play(song);
   }
 
-  removeSong(i) {
-    this.musicService.removeFromPlaylist(this.selectedPlaylist, this.songs[i]);
+  removeSong(song) {
+    this.musicService
+      .removeFromPlaylist(this.selectedPlaylist(), song)
+      .subscribe(playlists => {
+        this.playlists = playlists;
+        //If we remove the selected playlist
+        if(!this.selectedPlaylist()) {
+          this.selectedPlaylistId = null;
+          this.songs = [];
+        }
+      });
+  }
+
+  refreshPlaylists() {
+    this.musicService
+      .getPlaylists()
+      .subscribe(playlists => {
+        this.playlists = playlists;
+      });
+  }
+
+  selectedPlaylist() {
+    return this.findPlaylist(this.selectedPlaylistId);
+  }
+
+  selectedSongs() {
+    let playlist = this.selectedPlaylist();
+    if(playlist) {
+      return playlist.songs;
+    }
+    return [];
+  }
+
+  findPlaylist(playlistId) {
+    for (let i = 0; i < this.playlists.length; i++) {
+      if (this.playlists[i].id == playlistId) {
+        return this.playlists[i];
+      }
+    }
+    return null;
   }
 }

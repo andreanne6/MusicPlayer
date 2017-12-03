@@ -13,40 +13,37 @@
 </div>
 
 <br>
-<template [ngIf]="this.songs.length">
-	<h4>You have selected the playlist {{this.selectedPlaylist.name}}</h4>
+<template [ngIf]="this.selectedPlaylistId != null && this.selectedSongs().length">
+	<h4>You have selected the playlist {{this.selectedPlaylist().name}}</h4>
 	<table class="table" >
     <tr>
       <th>Song Title</th>
       <th>Artist</th>
       <th></th>
     </tr>
-    <tr *ngFor="let song of songs; let i=index ">
-      <td (click)="playSong(i)">{{song.title}}</td>
-      <td (click)="playSong(i)">{{song.authors}}</td>
-      <td><button type="button " class="btn btn-danger " (click)="removeSong(i) ">x</button></td>
+    <tr *ngFor="let song of selectedSongs(); let i=index ">
+      <td (click)="playSong(song)">{{song.title}}</td>
+      <td (click)="playSong(song)">{{song.authors}}</td>
+      <td><button type="button " class="btn btn-danger " (click)="removeSong(song)">x</button></td>
     </tr>
   </table>
 </template>
 
-<template [ngIf]="!this.musicService.getPlaylists().length">
+<template [ngIf]="!this.playlists.length">
 	<h3> You currently have no playlist</h3>
 </template>
 
-<template [ngIf]="this.musicService.getPlaylists().length">
+<template [ngIf]="this.playlists.length">
   <table class="table">
     <tr>
       <th>Playlist</th>
       <th>Id</th>
       <th></th>
     </tr>
-    <tr *ngFor="let playlist of playlists;let i = index" (click)="selectPlaylist(i)">
+    <tr *ngFor="let playlist of this.playlists" (click)="selectPlaylist(playlist.id)">
       <td >{{playlist.name}}</td>
       <td>{{playlist.id}}</td>
-      <td> <button type="button" class="btn btn-Danger"(click)="removePlaylist(i)">x</button></td>
+      <td> <button type="button" class="btn btn-Danger"(click)="removePlaylist(playlist.id)">x</button></td>
     </tr>
   </table>
 <template>
-	
-
-

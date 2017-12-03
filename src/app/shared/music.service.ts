@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 //rxjs
-import { Observable } from 'rxjs/Rx'
+import { Observable, Subscription } from 'rxjs/Rx'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -23,11 +23,11 @@ export class Playlist {
   songs;
   nextSongId;
 
-  constructor(id: number, name: string) {
-    this.id = id;
-    this.name = name;
-    this.songs = [];
-    this.nextSongId = 0;
+  constructor(data: any) {
+    this.id = data.id;
+    this.name = data.name;
+    this.songs = data.songs;
+    this.nextSongId = data.nextSongId;
   }
 
   public addSong(song: Song): void {
@@ -49,7 +49,6 @@ export class Playlist {
 @Injectable()
 export class MusicService {
   private audio;
-  private musicApis;
   public paused = true;
   public song;
   public current;
@@ -61,85 +60,82 @@ export class MusicService {
   private musicServiceUrl = "http://localhost:3000";
 
   constructor(
-    /*private spotify: SpotifyApiService,
-    private jamendo: JamendoApiService,
-    private deezer: DeezerApiService*/
     private http: Http
   ) {
     this.audio = new Audio();
-    //this.musicApis = [spotify, jamendo, deezer];
     this.playlists = [];
     this.nextPlaylistId = 0;
     this.song = '';
   }
 
-  public createPlaylist(name: string, songs: Song[] = []): Playlist {
-    let playlist = new Playlist(this.nextPlaylistId++, name);
-    for (let i = 0; i < songs.length; i++) {
-      playlist.addSong(songs[i]);
-    }
-    this.playlists.push(playlist);
-
-    return playlist;
+  public createPlaylist(name: string, songs: Song[] = []): Observable<Playlist> {
+    const body = {name: name, songs: this.songsToJson(songs)};
+    return this.http
+      .post(`${this.playlistServiceUrl}/new`, body)
+      .map(results => results.json())
+      .map(data => new Playlist(data.playlist));
   }
 
-  // Returns false if the playlist doesn't exist
-  private updatePlaylist(playlist: Playlist): boolean {
-    for (let i = 0; i < this.playlists.length; i++) {
-      if (this.playlists[i].id == playlist.id) {
-        this.playlists[i] = playlist;
-        return true;
-      }
+  private songsToJson(songs: Song[]): any[] {
+    let jsonSongs = [];
+    for(let i = 0; i < songs.length; i++) {
+      jsonSongs.push(songs[i].toJson());
     }
-    return false;
+    return jsonSongs;
+  }
+
+  // playlist param will be modified
+  // Returning false means the service doesn't have this playlist.
+  // Make sure you use the service properly.
+  public addToPlaylist(playlist: Playlist, song: Song): Observable<Playlist[]> {
+    playlist.addSong(song)
+    return this.updatePlaylist(playlist);
+  }
+
+  // playlist param will be modified
+  // Returning false means the service doesn't have this playlist.
+  // Make sure you use the service properly.
+  public removeFromPlaylist(playlist: Playlist, song: Song): Observable<Playlist[]> {
+    const removed = playlist.removeSong(song)
+    return this.updatePlaylist(playlist);
+  }
+
+  private updatePlaylist(playlist: Playlist): Observable<Playlist[]> {
+    return this.http
+      .put(`${this.playlistServiceUrl}/${playlist.id}`, {playlist: playlist})
+      .map(results => results.json())
+      .map(data => this.jsonToPlaylists(data));
   }
 
   // Returns null if the playlist doesn't exist
-  public deletePlaylist(id: number): Playlist {
-    for (let i = 0; i < this.playlists.length; i++) {
-      if (this.playlists[i].id == id) {
-        const removedPlaylist = this.playlists[i];
-        this.playlists.splice(i, 1);
-        return removedPlaylist;
-      }
+  public deletePlaylist(id: number): Observable<Playlist[]> {
+    return this.http
+      .delete(`${this.playlistServiceUrl}/${id}`)
+      .map(results => results.json())
+      .map(data => this.jsonToPlaylists(data));
+  }
+
+  public getPlaylist(id: number): Observable<Playlist> {
+    return this.http
+      .get(`${this.playlistServiceUrl}/${id}`)
+      .map(results => results.json())
+      .map(data => new Playlist(data.playlist));
+  }
+
+  public getPlaylists(): Observable<Playlist[]> {
+    return this.http
+      .get(`${this.playlistServiceUrl}/all`)
+      .map(results => results.json())
+      .map(data => this.jsonToPlaylists(data));
+  }
+
+  private jsonToPlaylists(data): Playlist[] {
+    const jsonPlaylists = data.playlists;
+    let playlists = [];
+    for(let i = 0; i < jsonPlaylists.length; i++) {
+      playlists.push(new Playlist(jsonPlaylists[i]));
     }
-    return null;
-  }
-
-  // playlist param will be modified
-  // Returning false means the service doesn't have this playlist.
-  // Make sure you use the service properly.
-  public addToPlaylist(playlist: Playlist, song: Song): boolean {
-    playlist.addSong(song)
-    return (this.updatePlaylist(playlist));
-  }
-
-  // playlist param will be modified
-  // Returning false means the service doesn't have this playlist.
-  // Make sure you use the service properly.
-  public removeFromPlaylist(playlist: Playlist, song: Song): boolean {
-    return (playlist.removeSong(song) && this.updatePlaylist(playlist));
-  }
-
-  private getPlaylistIndex(id: number) {
-    for (let i = 0; i < this.playlists.length; i++) {
-      if (this.playlists[i].id == id) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  public getPlaylist(id: number) {
-    let index = this.getPlaylistIndex(id)
-    if (index < 0) {
-      return null
-    }
-    return this.playlists[index];
-  }
-
-  public getPlaylists() {
-    return this.playlists;
+    return playlists;
   }
 
   public searchMusic(searchTerm: string): Observable<Song[]> {
@@ -153,11 +149,7 @@ export class MusicService {
     let songs = [];
     const jsonSongsList = json.songs;
     for(let i = 0; i < jsonSongsList.length; i++) {
-        let jsonSong = jsonSongsList[i];
-
-        if(jsonSong.streamUrl) {
-            songs.push(new Song(jsonSong));
-        }
+      songs.push(new Song(jsonSongsList[i]));
     }
     return songs;
   }
@@ -202,9 +194,5 @@ export class MusicService {
   private load(song: Song): void {
     this.audio.src = song.streamUrl;
     this.audio.load();
-  }
-
-  private flatten(arrayOfArrays) {
-    return arrayOfArrays.reduce((acc, array) => acc.concat(array), []);
   }
 }
