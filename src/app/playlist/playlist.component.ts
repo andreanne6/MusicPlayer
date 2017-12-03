@@ -15,9 +15,6 @@ export class PlaylistComponent implements OnInit{
 	songs = [];
 	title = 'Playlists';
 	playlist_name:string;
-	modalId : string = 'modalId';
-	modal_options = {};
-	successEventName = 'successEvent';  
 	playlist_hidden:string = 'none';
 	selectedPlaylist = null;
 	constructor(private musicService: MusicService){}
@@ -47,7 +44,6 @@ export class PlaylistComponent implements OnInit{
 	}
 
 	playSong(i) {
-    // console.log(this.songs[i]);
     this.musicService.play(this.songs[i]);
   }
 

@@ -19,6 +19,7 @@ export class PlayerComponent implements OnInit{
 		let paused = this.showPause;
 		let song_name = this.song_name;
 	}
+	
 	c_stop(){
 		this.stop.emit();
 	}
