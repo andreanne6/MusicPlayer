@@ -8,7 +8,6 @@ import { MusicService } from "./shared/music.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    paused = true;
   constructor(
     private musicService: MusicService
   ) { }
