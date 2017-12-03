@@ -8,11 +8,43 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-//Apis
-import { Song } from './apis/iapi.service';
-import { SpotifyApiService } from './apis/spotify-api.service';
-import { JamendoApiService } from './apis/jamendo-api.service';
-import { DeezerApiService } from './apis/deezer-api.service';
+export class Song {
+    title;
+    album;
+    authors;
+    duration;
+    streamUrl;
+    playlistId;
+
+    constructor(data: any = null) {
+        this.title = null;
+        this.album = null;
+        this.authors = [];
+        this.duration = null;
+        this.streamUrl = null;
+        this.playlistId = null;
+
+        if(data !== null) {
+            this.title = data.title;
+            this.album = data.album;
+            this.authors = data.authors;
+            this.duration = data.duration;
+            this.streamUrl = data.streamUrl;
+            this.playlistId = data.playlistId;
+        }
+    }
+
+    public toJson(): any {
+      return {
+        title: this.title,
+        album: this.album,
+        authors: this.authors,
+        duration: this.duration,
+        streamUrl: this.streamUrl,
+        playlistId: this.playlistId
+      }
+    }
+}
 
 // DO NOT USE functions in here.
 // Use the object as read only.
@@ -96,7 +128,7 @@ export class MusicService {
   // Returning false means the service doesn't have this playlist.
   // Make sure you use the service properly.
   public removeFromPlaylist(playlist: Playlist, song: Song): Observable<Playlist[]> {
-    const removed = playlist.removeSong(song)
+    playlist.removeSong(song);
     return this.updatePlaylist(playlist);
   }
 
